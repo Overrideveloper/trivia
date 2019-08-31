@@ -1,0 +1,35 @@
+<ng-container *ngIf="state.state === states[1].state;">
+    <div class="container">
+        <div class="score__container">
+            <h3>Your Score</h3>
+            <h1 class="score">{{score}}</h1>
+        </div>
+
+        <div class="header">
+            <h1>Question {{currentQuestionIndex}}</h1>
+            <span>
+                <small>{{currentQuestion.category}}</small> | <small>{{currentQuestion.difficulty}}</small>
+            </span>
+        </div>
+
+        <p id="question">{{currentQuestion.question}}</p>
+        <ng-container *ngIf="questionState">
+            <p class="result right" *ngIf="questionState.state === questionStates[1].state">You were right, the answer is {{currentQuestion.correct_answer}}</p>
+            <p class="result wrong" *ngIf="questionState.state === questionStates[2].state">You were wrong, the answer is {{currentQuestion.correct_answer}}</p>
+        </ng-container>
+        <form class="input__flex" novalidate (submit)="submit()" [formGroup]="form">
+            <select formControlName="answer">
+                <option *ngFor="let answer of currentQuestion.answers" [value]="answer">{{answer}}</option>
+            </select>
+            <button [disabled]="!form.valid" class="submit__btn" type="submit">Submit</button>
+        </form>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="state.state === states[0].state;">
+    <div class="container">
+        <div class="header">
+            <h1>Loading...</h1>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.header {
+    > h1 {
+        font-family: ZukaDoodle;
+        font-size: 100px;
+        letter-spacing: 10px;
+    }
+    margin-bottom: 2rem;
+}
+
+.main {
+    font-family: 'Open Sans', sans-serif;
+
+    p {
+        text-align: center;
+    }
+
+    .btn__container {
+        margin-top: 20px;
+    }
+
+    .start__btn {
+        height: 60px;
+        width: 200px;
+        display: block;
+        margin: auto;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: bold;
+        color: var(--background);
+        font-size: 22px;
+        border: none;
+        border-radius: 102px;
+        box-shadow: 0px 0px 5px 1px #a1a1a1;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .start__btn:focus {
+        outline: none;
+    }
+}
