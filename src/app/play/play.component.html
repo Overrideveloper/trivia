@@ -1,5 +1,17 @@
-<ng-container *ngIf="state.state === states[1].state;">
+<ng-container *ngIf="state.state === states[1].state">
     <div class="container">
+        <div class="time">
+            <span>{{this.timeout}}</span>
+            <ng-container *ngIf="currentQuestion.difficulty.toLowerCase() === 'easy'">
+                <div [style.width]="[((this.timeout /15) * 100) + '%']"></div>
+            </ng-container>
+            <ng-container *ngIf="currentQuestion.difficulty.toLowerCase() === 'medium'">
+                <div [style.width]="[((this.timeout /30) * 100) + '%']"></div>
+            </ng-container>
+            <ng-container *ngIf="currentQuestion.difficulty.toLowerCase() === 'hard'">
+                <div [style.width]="[((this.timeout /50) * 100) + '%']"></div>
+            </ng-container>
+        </div>
         <div class="score__container">
             <h3>Your Score</h3>
             <h1 class="score">{{score}}</h1>
@@ -14,22 +26,48 @@
 
         <p id="question">{{currentQuestion.question}}</p>
         <ng-container *ngIf="questionState">
-            <p class="result right" *ngIf="questionState.state === questionStates[1].state">You were right, the answer is {{currentQuestion.correct_answer}}</p>
-            <p class="result wrong" *ngIf="questionState.state === questionStates[2].state">You were wrong, the answer is {{currentQuestion.correct_answer}}</p>
+            <p class="result right" *ngIf="questionState.state === questionStates[1].state">You are right, the answer is {{currentQuestion.correct_answer}}</p>
+            <p class="result wrong" *ngIf="questionState.state === questionStates[2].state">You are wrong, the answer is {{currentQuestion.correct_answer}}</p>
         </ng-container>
         <form class="input__flex" novalidate (submit)="submit()" [formGroup]="form">
             <select formControlName="answer">
+                <option value="select">Choose an answer</option>
                 <option *ngFor="let answer of currentQuestion.answers" [value]="answer">{{answer}}</option>
             </select>
-            <button [disabled]="!form.valid" class="submit__btn" type="submit">Submit</button>
+            <button [disabled]="!form.valid || questionState.state !== questionStates[0].state" class="submit__btn" type="submit">Submit</button>
         </form>
     </div>
 </ng-container>
 
-<ng-container *ngIf="state.state === states[0].state;">
+<ng-container *ngIf="state.state === states[0].state">
     <div class="container">
         <div class="header">
             <h1>Loading...</h1>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="state.state === states[2].state">
+    <div class="container">
+        <div class="header">
+            <h1>Game Over</h1>
+            <p>Your score is {{score}}</p>
+            <button class="start__btn" (click)="restart()">Play Again</button>
+            <div class="share__container">
+                <a class="share__link" [href]="'https://wa.me/?text=' + getReferralLink()" data-action="share/whatsapp/share">
+                    Share with your friends on Whatsapp
+                </a>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="state.state === states[3].state">
+    <div class="container">
+        <div class="header">
+            <h1>Uh oh!</h1>
+            <p>{{error}}</p>
+            <button class="start__btn" (click)="retry()">Try again</button>
         </div>
     </div>
 </ng-container>
