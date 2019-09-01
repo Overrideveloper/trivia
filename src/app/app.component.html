@@ -1,3 +1,4 @@
 <div>
     <router-outlet></router-outlet>
+    <button *ngIf="pwa.promptEvent" id="add__btn" (click)="installPWA()">Add Trivia! to home screen</button>
 </div>

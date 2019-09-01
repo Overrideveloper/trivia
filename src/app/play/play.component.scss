@@ -42,6 +42,10 @@ select {
     background: white;
 }
 
+select:focus {
+    outline: none !important;
+}
+
 .input__flex {
     display: flex;
     align-items: center;

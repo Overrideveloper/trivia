@@ -1,3 +1,15 @@
 div {
     display: grid;
 }
+
+#add__btn {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    color: rgb(82,15,121);
+    background: white;
+    border: 1px solid white;
+    height: 50px;
+    font-size: medium;
+    font-weight: 500;
+}
