@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { CONFIG } from '../play/play.component';
 
 const URL = environment.url;
 
@@ -11,7 +12,7 @@ export class QuestionService {
 
   constructor(private http: HttpClient) { }
 
-  loadQuestions() {
-    return this.http.get(URL);
+  loadQuestions(config: CONFIG) {
+    return this.http.get(`${URL}?amount=${config.noOfQuestions}&category=${config.category}&difficulty=${config.difficulty}`);
   }
 }

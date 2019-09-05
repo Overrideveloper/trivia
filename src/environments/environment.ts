@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'https://opentdb.com/api.php?amount=10'
+  url: 'https://opentdb.com/api.php'
 };
 
 /*

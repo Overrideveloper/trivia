@@ -31,12 +31,23 @@ interface STATE {
   state: string;
 }
 
+interface ISTATE {
+  state: STATE;
+  setState: (state: STATE) => void;
+}
+
+export interface CONFIG {
+  noOfQuestions: number;
+  category: string;
+  difficulty: string;
+}
+
 @Component({
   selector: 'app-play',
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.scss']
 })
-export class PlayComponent implements OnInit {
+export class PlayComponent implements OnInit, ISTATE {
   score = 0;
   currentQuestionIndex = 0;
   currentQuestion: any;
@@ -65,6 +76,7 @@ export class PlayComponent implements OnInit {
   timeoutFn: any;
   intervalFn: any;
   timeout: number;
+  config: CONFIG;
 
   constructor(private questionService: QuestionService, formBuilder: FormBuilder) {
     this.setState(this.states[0]);
@@ -72,6 +84,12 @@ export class PlayComponent implements OnInit {
     this.form = formBuilder.group({
       answer: ['select', Validators.compose([Validators.required, ValidateInput])]
     });
+
+    this.config = {
+      noOfQuestions: Number(localStorage.getItem('noOfQuestions')),
+      category: localStorage.getItem('category'),
+      difficulty: localStorage.getItem('difficulty')
+    };
   }
 
   ngOnInit() {
@@ -87,7 +105,7 @@ export class PlayComponent implements OnInit {
   }
 
   loadQuestions() {
-    this.questionService.loadQuestions().pipe(
+    this.questionService.loadQuestions(this.config).pipe(
       retry(3),
       catchError(this.handleError.bind(this))
     ).subscribe((response: any) => {
