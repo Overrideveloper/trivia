@@ -1,9 +1,10 @@
 <div class="container">
     <div class="header">
         <h1>Trivia</h1>
+        <p class="high_score" *ngIf="highScore && highScorer">High Score: {{highScore}} points [{{highScorer}}]</p>
     </div>
     <div class="main">
-        <p>Answer 10 questions of various difficulties and of different categories. <br/>Let's see how many points you can score.</p>
+        <p>Answer questions of various difficulties and of different categories. <br/>Let's see how many points you can score.</p>
         <form [formGroup]="setupForm" novalidate (submit)="submit()">
             <div class="grid" >
                 <div class="form__group">
@@ -51,7 +52,7 @@
                 </div>
             </div>
             <div class="btn__container">
-                <button [disabled]="!setupForm.valid" [routerLink]="[ '/play']" class="start__btn">Play</button>
+                <button [disabled]="!setupForm.valid" type="submit" class="start__btn">Play</button>
             </div>
         </form>
     </div>

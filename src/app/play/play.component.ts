@@ -47,7 +47,7 @@ export interface CONFIG {
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.scss']
 })
-export class PlayComponent implements OnInit, ISTATE {
+export class PlayComponent implements OnInit {
   score = 0;
   currentQuestionIndex = 0;
   currentQuestion: any;
@@ -162,6 +162,29 @@ export class PlayComponent implements OnInit, ISTATE {
       this.setQuestionTimeout(this.currentQuestion);
     } else {
       this.setState(this.states[2]);
+
+      setTimeout(() => {
+        const highScore = localStorage.getItem('high_score');
+
+        if (highScore && highScore !== '') {
+          const formattedHighScore = Number(highScore);
+          if (this.score > formattedHighScore) {
+            const name = prompt('High Score! Enter your name to save your score');
+            if (name && name !== null) {
+              localStorage.setItem('high_score', `${this.score}`);
+              localStorage.setItem('high_scorer',  name);
+            }
+          }
+        } else {
+          if (this.score !== 0) {
+            const name = prompt('High Score! Enter your name to save your score');
+            if (name && name !== null) {
+              localStorage.setItem('high_score', `${this.score}`);
+              localStorage.setItem('high_scorer',  name);
+            }
+          }
+        }
+      }, 1000);
     }
   }
 
@@ -185,7 +208,6 @@ export class PlayComponent implements OnInit, ISTATE {
         tempElm.innerHTML = TEXT;
         text.splice(index, 1, tempElm.innerText);
       });
-      console.log(text);
       return text.shuffle();
     }
   }

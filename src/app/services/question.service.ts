@@ -13,6 +13,7 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
 
   loadQuestions(config: CONFIG) {
-    return this.http.get(`${URL}?amount=${config.noOfQuestions}&category=${config.category}&difficulty=${config.difficulty}`);
+    // tslint:disable-next-line
+    return this.http.get(`${URL}?amount=${config.noOfQuestions}${config.category !== 'any' ? `&category=${Number(config.category)}` : ''}${config.difficulty !== 'any' ? `&difficulty=${config.difficulty}` : ''}`);
   }
 }
